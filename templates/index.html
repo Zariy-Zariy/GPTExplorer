@@ -1,0 +1,39 @@
+{%extends "layout.html"%}
+
+{%block title%} GPT Explorer {%endblock%}
+
+{%block script%}
+    document.addEventListener("DOMContentLoaded", function(){
+        const form = document.getElementById("mainform");
+
+        form.addEventListener("submit", function(){                    
+            let loading_element = document.createElement("p");
+            const loading_text = document.createTextNode("Generating the website...");
+
+            loading_element.appendChild(loading_text);
+            loading_element.ariaBusy = "true";
+
+            form.appendChild(loading_element);
+        });
+    });
+    window.addEventListener("beforeunload", function(){
+        loading_element = document.querySelector("p");
+        loading_element.remove();
+    });
+{%endblock%}
+
+{%block body%}
+    <main class="container">
+        <h1>GPT Explorer</h1>
+        <label>Describe what you want: </label>
+        <textarea name="description" placeholder="A website about the history of bananas..." form="mainform" style="resize: vertical;"></textarea>
+        <form method="post" id="mainform">
+            <label>Your OpenAI API key: </label>
+            <input type="text" placeholder="sk-************************************************" name="API key">
+            <input type="submit" id="submit-button">
+        </form>
+        {%if error is not None%}
+            <h2>{{error}}</H>
+        {%endif%}
+    </main>
+{%endblock%}

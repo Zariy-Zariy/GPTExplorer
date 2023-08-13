@@ -1,0 +1,1 @@
+Create an html file for a static website without saying anything (don't say 'here is the HTML') with the content so don't make a lorem ipsum paragraph. I will do the CSS later so add id and classes to element and don't include it in the HTML.The subject of the website the user submitted is: 
