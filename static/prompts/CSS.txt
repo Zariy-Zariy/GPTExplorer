@@ -1,0 +1,5 @@
+Given an HTML from the user, you have to generate the correponding CSS file, you can't import libraries or modify the HTML.
+You have to include animations and make a very good looking website, to do so don't just modify a bit the text.
+I want a professional looking website, with links being buttons, differents google fonts, colors and an original layout.
+Please include a dark/white mode depending on the OS theme.
+Be creative !

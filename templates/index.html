@@ -3,23 +3,60 @@
 {%block title%} GPT Explorer {%endblock%}
 
 {%block script%}
-    document.addEventListener("DOMContentLoaded", function(){
-        const form = document.getElementById("mainform");
-
-        form.addEventListener("submit", function(){                    
-            let loading_element = document.createElement("p");
-            const loading_text = document.createTextNode("Generating the website...");
-
-            loading_element.appendChild(loading_text);
-            loading_element.ariaBusy = "true";
-
-            form.appendChild(loading_element);
-        });
-    });
-    window.addEventListener("beforeunload", function(){
+    function deleteLoadingElement(){
         loading_element = document.querySelector("p");
         loading_element.remove();
+    }
+
+    function createLoadingElement(form){
+        let loading_element = document.createElement("p");
+        const loading_text = document.createTextNode("Generating the website...");
+
+        loading_element.appendChild(loading_text);
+        loading_element.ariaBusy = "true";
+        form.appendChild(loading_element);
+
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function(){
+        let form = document.getElementById("mainform");
+
+        form.addEventListener("submit", function(event){                    
+            createLoadingElement(form);
+
+            let api_input = document.querySelector("input[type='text']");
+            let prompt_input = document.querySelector("textarea");
+            api_input.ariaInvalid = "false";
+            prompt_input.ariaInvalid = "false";
+
+            if (api_input.value == "" || api_input.value.startsWith("sk-") == false){
+                event.preventDefault();
+                api_input.ariaInvalid = "true";
+
+                deleteLoadingElement();
+            }
+
+            if(prompt_input.value == ""){
+                event.preventDefault();
+                prompt_input.ariaInvalid = "true";
+
+                deleteLoadingElement();
+            }
+        });
     });
+
+    window.addEventListener("unload", deleteLoadingElement);
+{%endblock%}
+
+{%block style%}
+    .error{
+        color: white;
+        background-color: rgba(255, 0, 0, 0.395);
+        padding: 20px;
+        border-radius: 10px;
+        border: solid red;
+    }
 {%endblock%}
 
 {%block body%}
@@ -32,8 +69,8 @@
             <input type="text" placeholder="sk-************************************************" name="API key">
             <input type="submit" id="submit-button">
         </form>
-        {%if error is not None%}
-            <h2>{{error}}</H>
+        {%if error%}
+            <p class="error">{{error}}</p>
         {%endif%}
     </main>
 {%endblock%}

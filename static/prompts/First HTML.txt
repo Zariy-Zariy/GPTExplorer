@@ -1,1 +1,10 @@
-Create an html file for a static website without saying anything (don't say 'here is the HTML') with the content so don't make a lorem ipsum paragraph. I will do the CSS later so add id and classes to element and don't include it in the HTML.The subject of the website the user submitted is: 
+Create an static HTML file with the ENTIRE CONTENT GENERATED as asked by the user.
+To create this file you have to follow a couple of rules:
+1-You can't use internal files 
+2-To generate a link to a different webpage YOU NEED TO use this custom tag:
+<webpage>[Name of the link displayed to the user]<webpage/>
+3-You can't use any <a> tag or <img> tags even if it's in the HTML provided by the user
+4-Don't genrate css in any form
+5-If you want to put an image YOU HAVE TO use this custom tag:
+<image>[Precise description of the image]<image/>
+6-Do not create a footer and a contact page unless asked by the user
