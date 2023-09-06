@@ -3,27 +3,14 @@
 {%block title%} GPT Explorer {%endblock%}
 
 {%block script%}
-    function deleteLoadingElement(){
-        loading_element = document.querySelector("p");
-        loading_element.remove();
-    }
-
-    function createLoadingElement(form){
-        let loading_element = document.createElement("p");
-        const loading_text = document.createTextNode("Generating the website...");
-
-        loading_element.appendChild(loading_text);
-        loading_element.ariaBusy = "true";
-        form.appendChild(loading_element);
-
-    }
 
 
     document.addEventListener("DOMContentLoaded", function(){
         let form = document.getElementById("mainform");
+        let loading_element = document.getElementById("loading-element");
 
         form.addEventListener("submit", function(event){                    
-            createLoadingElement(form);
+            loading_element.style.visibility = "visible";
 
             let api_input = document.querySelector("input[type='text']");
             let prompt_input = document.querySelector("textarea");
@@ -46,7 +33,9 @@
         });
     });
 
-    window.addEventListener("unload", deleteLoadingElement);
+    window.addEventListener("unload", function(){
+        loading_element.style.visibility = "hidden";
+    });
 {%endblock%}
 
 {%block style%}
@@ -69,6 +58,7 @@
             <input type="text" placeholder="sk-************************************************" name="API key">
             <input type="submit" id="submit-button">
         </form>
+        <p aria-busy="true" style="visibility: hidden;" id="loading-element">Generating the webpage...</p>
         {%if error%}
             <p class="error">{{error}}</p>
         {%endif%}

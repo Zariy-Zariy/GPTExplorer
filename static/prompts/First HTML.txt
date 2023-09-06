@@ -2,7 +2,7 @@ Create an static HTML file with the ENTIRE CONTENT GENERATED as asked by the use
 To create this file you have to follow a couple of rules:
 1-You can't use internal files 
 2-To generate a link to a different webpage YOU NEED TO use this custom tag:
-<webpage>[Name of the link displayed to the user]<webpage/>
+<webpage>[Name of the link displayed to the user(mandatory)]<webpage/>
 3-You can't use any <a> tag or <img> tags even if it's in the HTML provided by the user
 4-Don't genrate css in any form
 5-If you want to put an image YOU HAVE TO use this custom tag:

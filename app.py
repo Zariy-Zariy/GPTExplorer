@@ -38,26 +38,28 @@ def generate_webpage(api_key, instructions_html, user_input_html, instructions_c
         website_modifier = bs4.BeautifulSoup(website)
 
     css_link = website_modifier.new_tag("link", rel="stylesheet", type="text/css", href=f"{website_path}/style.css")
-
     website_modifier.head.append(css_link)
+
+    js_link = website_modifier.new_tag("script", type="text/javascript", src="./static/loader.js")
+    website_modifier.head.append(js_link)
+
     link_tags = website_modifier.find_all("webpage")
     for link_tag in link_tags:
         new_tag = website_modifier.new_tag("a")
-        new_tag.string = link_tag.string
-        new_tag["href"] = f"./next-page?text={new_tag.string}&old-id={website_id}"
+        new_tag.tag = link_tag.get_text()
+        new_tag["href"] = f"./next-page?text={new_tag.tag}&old-id={website_id}"
 
         link_tag.replace_with(new_tag)
 
     image_tags = website_modifier.find_all("image")
     for image_tag in image_tags:
-        image_url = generate_image(api_key=api_key, prompt= str(image_tag.string))  
-        print(image_tag.string)
+        image_url = generate_image(api_key=api_key, prompt= str(image_tag.get_text()))  
         if image_url.startswith("Error: "):
             return image_url
 
         new_tag = website_modifier.new_tag("img")
         new_tag["src"] = image_url
-        new_tag["alt"] = str(image_tag.string)
+        new_tag["alt"] = str(image_tag.get_text())
 
         image_tag.replace_with(new_tag)
 
